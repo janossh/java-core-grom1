@@ -6,21 +6,21 @@ import lesson22.task2.exeption.InternalServerException;
 import lesson22.task2.exeption.LimitExceeded;
 
 public class Controller {
-    private TransactionDAO transactionDAO = new TransactionDAO();
+    //private TransactionDAO transactionDAO = new TransactionDAO();
 
-    public Transaction save(Transaction transaction) throws LimitExceeded, BadRequestException, InternalServerException {
-        return transactionDAO.save(transaction);
+    public static Transaction save(Transaction transaction) throws LimitExceeded, BadRequestException, InternalServerException {
+        return TransactionDAO.save(transaction);
     }
 
-    public Transaction[] transactionList() {
-        return transactionDAO.transactionList();
+    public static Transaction[] transactionList() {
+        return TransactionDAO.transactionList();
     }
 
-    public Transaction[] transactionList(String city) {
-        return transactionDAO.transactionList(city);
+    public static Transaction[] transactionList(String city) {
+        return TransactionDAO.transactionList(city);
     }
 
-    public Transaction[] transactionList(int amount) {
-        return transactionDAO.transactionList(amount);
+    public static Transaction[] transactionList(int amount) {
+        return TransactionDAO.transactionList(amount);
     }
 }

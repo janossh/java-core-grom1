@@ -11,13 +11,13 @@ public class Demo {
         Transaction transaction0 = new Transaction(123, "Kiev", 12, "AAA", TransactionType.INCOME, new Date());
         Transaction transaction1 = new Transaction(123, "Kiev", 12, "AAA", TransactionType.INCOME, new Date());
         Transaction transaction2 = new Transaction(123, "Kiev", 12, "AAA", TransactionType.INCOME, new Date());
-        Controller controller = new Controller();
+        //Controller controller = new Controller();
 
         try {
-            System.out.println(controller.save(transaction0).getId());
-            System.out.println(Arrays.toString(controller.transactionList()));
-            System.out.println(Arrays.toString(controller.transactionList("Kiev")));
-            System.out.println(Arrays.toString(controller.transactionList(12)));
+            System.out.println(Controller.save(transaction0).getId());
+            System.out.println(Arrays.toString(Controller.transactionList()));
+            System.out.println(Arrays.toString(Controller.transactionList("Kiev")));
+            System.out.println(Arrays.toString(Controller.transactionList(10)));
 
         } catch (BadRequestException e) {
             System.out.println(e.getMessage());
