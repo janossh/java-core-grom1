@@ -46,12 +46,12 @@ public class Capability implements Comparable<Capability>{
 
     @Override
     public String toString() {
-        return "Capability{" +
+        return "{" +
                 "id=" + id +
-                ", channelName='" + channelName + '\'' +
-                ", fingerprint='" + fingerprint + '\'' +
-                ", isActive=" + isActive +
-                ", dateCreated=" + dateCreated +
+                ", ch_Name='" + channelName + '\'' +
+                ", FP='" + fingerprint + '\'' +
+                ", isA=" + isActive +
+                ", DC=" + dateCreated +
                 '}';
     }
 }
