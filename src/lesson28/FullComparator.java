@@ -1,29 +1,30 @@
 package lesson28;
 
 import java.util.Comparator;
+import java.util.Date;
 
-public class FullComparator implements Comparator<Capability>{
+public class FullComparator implements Comparator<Capability> {
     @Override
     public int compare(Capability o1, Capability o2) {
+        if (compareToValues(o1.getChannelName(), o2.getChannelName()) != 0)
+            return compareToValues(o1.getChannelName(), o2.getChannelName());
+        else if (compareToValues(o1.getFingerprint(), o2.getFingerprint()) != 0)
+            return compareToValues(o1.getFingerprint(), o2.getFingerprint());
 
-        if (o1.getChannelName()!=null&&o2.getChannelName()!=null&&!o1.getChannelName().equals(o2.getChannelName()))
-            return o1.getChannelName().compareTo(o2.getChannelName());
-        else if (o1.getChannelName()!=null&&o2.getChannelName()==null)
-            return -1;
-        else if (o1.getChannelName()==null&&o2.getChannelName()!=null)
-            return 1;
-        else if (o1.getFingerprint()!=null&&o2.getFingerprint()!=null&&!o1.getFingerprint().equals(o2.getFingerprint()))
-            return o1.getFingerprint().compareTo(o2.getFingerprint());
-        else if (o1.getFingerprint()!=null&&o2.getFingerprint()==null)
-            return -1;
-        else if (o1.getFingerprint()==null&&o2.getFingerprint()!=null)
-            return 1;
-        else if (o1.getDateCreated()!=null&&o2.getDateCreated()!=null&&!o1.getDateCreated().equals(o2.getDateCreated()))
-            return o1.getDateCreated().getTime() - o2.getDateCreated().getTime()>0 ? -1 : 1;
-        else if (o1.getDateCreated()!=null&&o2.getDateCreated()==null)
-            return 1;
-        else if (o1.getDateCreated()==null&&o2.getDateCreated()!=null)
-            return -1;
-        return 0;
+            return compareToValues(o1.getDateCreated(), o2.getDateCreated());
     }
+
+    private <S extends Comparable> int compareToValues(S s1, S s2) {
+
+        if (s1 == null) {
+            return s2 == null ? 0 : 1;
+        }
+        if (s2 == null)
+            return -1;
+
+        if(s1.getClass().getSimpleName().equals("String"))
+            return ((String)s1).compareTo((String) s2);
+        return ((Date)s1).getTime() - ((Date)s2).getTime() > 0 ? -1 : 1;
+    }
+
 }
