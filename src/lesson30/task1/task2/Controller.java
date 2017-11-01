@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Controller {
 
-    DAO dao = new DAO();
+    private DAO dao = new DAO();
 
     public Set<Employee> employeesByProject(Project project) {
 
@@ -124,7 +124,14 @@ public class Controller {
         return employees;
     }
 
+    public Project getProject(int index) {
+        return dao.getProjects().get(index);
+    }
 
-//- employeesByCustomerProjects(Customer customer) - список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
+    public Employee getEmployee(int index) {
+        return dao.getEmployees().get(index);
+    }
+
+    //- employeesByCustomerProjects(Customer customer) - список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
 
 }

@@ -43,7 +43,7 @@ public class Employee {
         this.position = position;
         this.department = department;
 
-        addEmploeeToDepartment(this);
+        //addEmploeeToDepartment(this);
 
 
     }
@@ -69,17 +69,28 @@ public class Employee {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + dateHired.hashCode();
         result = 31 * result + position.hashCode();
-        result = 31 * result + department.hashCode();
+//        result = 31 * result + department.hashCode();
         result = 31 * result + projects.hashCode();
         return result;
     }
 
-    public void addEmploeeToDepartment(Employee employee) {
-        if (this.department != null)
-            this.department.getEmployees().add(this);
-    }
+//    public void addEmploeeToDepartment(Employee employee) {
+//        if (this.department != null)
+//            this.department.getEmployees().add(this);
+//    }
 
     public void addProjects(Project project) {
         projects.add(project);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateHired=" + dateHired +
+                ", position=" + position +
+                ", department=" + department +
+                '}';
     }
 }

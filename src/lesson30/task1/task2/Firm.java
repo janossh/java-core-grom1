@@ -1,24 +1,25 @@
 package lesson30.task1.task2;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class Firm {
     private Date dateFounded;
-    private Set<Department> departments;
-    private Set<Customer> customers;
+    private List<Department> departments;
+    private List<Customer> customers;
 
-    public Firm(Date dateFounded, Set<Department> departments, Set<Customer> customers) {
+    public Firm(Date dateFounded, List<Department> departments, List<Customer> customers) {
         this.dateFounded = dateFounded;
         this.departments = departments;
         this.customers = customers;
     }
 
-    public Set<Department> getDepartments() {
+    public List<Department> getDepartments() {
         return departments;
     }
 
-    public Set<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 }

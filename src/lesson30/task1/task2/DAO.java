@@ -5,9 +5,10 @@ import java.util.*;
 
 public class DAO {
     private Firm firm;
-    private Set<Department> departments;
-    private Set<Customer> customers;
-    private Set<Project> projects;
+    private List<Department> departments;
+    private List<Customer> customers;
+    private List<Project> projects;
+    private List<Employee> employees;
 
     public DAO() {
         Department departmentDeveloper = new Department(DepartmentType.программисты);
@@ -19,7 +20,7 @@ public class DAO {
         Customer customer2 = new Customer("Alladin2", "USA", 5000);
         Customer customer3 = new Customer("Alladin3", "USA", 2000);
 
-        customers = new HashSet<>();
+        customers = new ArrayList<>();
 
         customers.add(customer1);
         customers.add(customer2);
@@ -30,11 +31,24 @@ public class DAO {
         Employee employeeTamara = new Employee("Tamara", "Ivanov", new Date(), Position.TEAM_LEAD, departmentDeveloper);
         Employee employeeTrainy = new Employee("Student", "XXX", new Date(), Position.DEVELOPER, departmentDeveloper);
 
-        departments = new HashSet<>();
+        employees = new ArrayList<>();
+        employees.add(employeeRoman);
+        employees.add(employeeIvan);
+        employees.add(employeeTamara);
+        employees.add(employeeTrainy);
+
+        departmentDeveloper.getEmployees().add(employeeRoman);
+        departmentDeveloper.getEmployees().add(employeeIvan);
+        departmentDeveloper.getEmployees().add(employeeTamara);
+        departmentDeveloper.getEmployees().add(employeeTrainy);
+
+        departments = new ArrayList<>();
         departments.add(departmentDeveloper);
         departments.add(departmentDisigner);
         departments.add(departmentAnalitic);
         departments.add(departmentManagement);
+
+
 
 
         firm = new Firm(new Date(), departments, customers);
@@ -44,9 +58,16 @@ public class DAO {
         Project project3 = new Project("3Project", customer3);
         Project project4 = new Project("4Project", customer3);
 
+        projects = new ArrayList<>();
+
+        projects.add(project1);
+        projects.add(project2);
+        projects.add(project3);
+        projects.add(project4);
+
         employeeRoman.addProjects(project1);
         employeeIvan.addProjects(project1);
-        employeeTamara.addProjects(project2);
+        employeeTamara.addProjects(project1);
         employeeRoman.addProjects(project3);
         employeeTamara.addProjects(project4);
     }
@@ -55,15 +76,19 @@ public class DAO {
         return firm;
     }
 
-    public Set<Department> getDepartments() {
+    public List<Department> getDepartments() {
         return departments;
     }
 
-    public Set<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public Set<Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
     }
 }

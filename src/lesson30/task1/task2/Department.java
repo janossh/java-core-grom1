@@ -33,7 +33,7 @@ public class Department {
     @Override
     public int hashCode() {
         int result = type.hashCode();
-        result = 31 * result + employees.hashCode();
+//        result = 31 * result + employees.hashCode();
         return result;
     }
 }
