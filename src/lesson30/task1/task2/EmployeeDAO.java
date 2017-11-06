@@ -45,17 +45,21 @@ public class EmployeeDAO {
 
         for (Project pr : ProjectDAO.projectsByCustomer(customer)) {
             if (pr != null)
-                for (Department dp : FirmDAO.getFirm().getDepartments()) {
-                    if (dp != null)
-                        for (Employee em : dp.getEmployees()) {
-                            if (em != null && em.getProjects().contains(pr)) {
-                                employees.add(em);
-                            }
-                        }
-                }
+                emByProject(employees, pr);
         }
 
         return employees;
+    }
+
+    private static void emByProject(Set<Employee> employees, Project pr) {
+        for (Department dp : FirmDAO.getFirm().getDepartments()) {
+            if (dp != null)
+                for (Employee em : dp.getEmployees()) {
+                    if (em != null && em.getProjects().contains(pr)) {
+                        employees.add(em);
+                    }
+                }
+        }
     }
 
     public static Set<Employee> employeesByProjectEmployee(Employee employee) {
@@ -138,14 +142,7 @@ public class EmployeeDAO {
 
         Set<Employee> employees = new HashSet<>();
 
-        for (Department dp : FirmDAO.getFirm().getDepartments()) {
-            if (dp != null)
-                for (Employee em : dp.getEmployees()) {
-                    if (em != null && em.getProjects().contains(project)) {
-                        employees.add(em);
-                    }
-                }
-        }
+        emByProject(employees, project);
         return employees;
     }
 }
