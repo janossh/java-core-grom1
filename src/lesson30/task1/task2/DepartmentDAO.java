@@ -18,10 +18,7 @@ public class DepartmentDAO {
         departments.add(departmentAnalitic);
         departments.add(departmentManagement);
 
-        departmentDeveloper.getEmployees().add(EmployeeDAO.getEmployees().get(0));
-        departmentDeveloper.getEmployees().add(EmployeeDAO.getEmployees().get(1));
-        departmentDeveloper.getEmployees().add(EmployeeDAO.getEmployees().get(2));
-        departmentDeveloper.getEmployees().add(EmployeeDAO.getEmployees().get(3));
+
     }
 
 

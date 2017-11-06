@@ -10,7 +10,6 @@ public class CustomerDAO {
 
     public CustomerDAO() {
 
-
         Customer customer1 = new Customer("Alladin1", "USA", 15000);
         Customer customer2 = new Customer("Alladin2", "USA", 5000);
         Customer customer3 = new Customer("Alladin3", "USA", 2000);
@@ -20,14 +19,7 @@ public class CustomerDAO {
         customers.add(customer1);
         customers.add(customer2);
         customers.add(customer3);
-
-
-
-
-
     }
-
-
 
 
     public static List<Customer> getCustomers() {

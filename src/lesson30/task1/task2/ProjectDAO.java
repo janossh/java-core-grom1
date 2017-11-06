@@ -27,7 +27,8 @@ public class ProjectDAO {
         return projects;
     }
 
-    public Project getProject(int index) {
+    public static Project getProject(int index) {
+        if (getProjects() == null) return null;
         return getProjects().get(index);
     }
 
@@ -35,17 +36,20 @@ public class ProjectDAO {
         Set<Project> projects = new HashSet<>();
 
         for (Department dp : FirmDAO.getFirm().getDepartments()) {
-            for (Employee em : dp.getEmployees()) {
-                for (Project pr : em.getProjects()) {
-                    if (pr.getCustomer().equals(customer))
-                        projects.add(pr);
+            if (dp != null)
+                for (Employee em : dp.getEmployees()) {
+                    if (em != null)
+                        for (Project pr : em.getProjects()) {
+                            if (pr != null && pr.getCustomer().equals(customer))
+                                projects.add(pr);
+                        }
                 }
-            }
         }
         return projects;
     }
 
-    public Set<Project> projectsByEMployee(Employee employee) {
+    public static Set<Project> projectsByEMployee(Employee employee) {
+        if (employee == null) return null;
         return employee.getProjects();
     }
 }
