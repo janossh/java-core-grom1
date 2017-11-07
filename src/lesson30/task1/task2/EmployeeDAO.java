@@ -52,15 +52,11 @@ public class EmployeeDAO {
     }
 
     private static void emByProject(Set<Employee> employees, String prName) {
-        for (Department dp : FirmDAO.getFirm().getDepartments()) {
-            if (dp != null)
-                for (Employee em : dp.getEmployees()) {
-                    if (em != null)
-                        for (Project pr : em.getProjects()) {
-                            if (pr.getName().equals(prName))
-                                employees.add(em);
-                        }
-                }
+        for (Employee em : getEmployeeForAllDepartment()) {
+            for (Project pr : em.getProjects()) {
+                if (pr.getName().equals(prName))
+                    employees.add(em);
+            }
         }
     }
 
@@ -69,13 +65,10 @@ public class EmployeeDAO {
 
         for (Project pr : employee.getProjects()) {
             if (pr != null)
-                for (Department dp : FirmDAO.getFirm().getDepartments()) {
-                    if (dp != null)
-                        for (Employee em : dp.getEmployees()) {
-                            if (em != null && !employee.equals(em) && em.getProjects().contains(pr)) {
-                                employees.add(em);
-                            }
-                        }
+                for (Employee em : getEmployeeForAllDepartment()) {
+                    if (!employee.equals(em) && em.getProjects().contains(pr)) {
+                        employees.add(em);
+                    }
                 }
         }
         return employees;
@@ -86,13 +79,10 @@ public class EmployeeDAO {
 
         for (Project pr : employee.getProjects()) {
             if (pr != null)
-                for (Department dp : FirmDAO.getFirm().getDepartments()) {
-                    if (dp != null)
-                        for (Employee em : dp.getEmployees()) {
-                            if (em != null && !employee.equals(em) && em.getPosition() == Position.TEAM_LEAD && em.getProjects().contains(pr)) {
-                                employees.add(em);
-                            }
-                        }
+                for (Employee em : getEmployeeForAllDepartment()) {
+                    if (!employee.equals(em) && em.getPosition() == Position.TEAM_LEAD && em.getProjects().contains(pr)) {
+                        employees.add(em);
+                    }
                 }
         }
         return employees;
@@ -103,14 +93,12 @@ public class EmployeeDAO {
 
         for (Project pr : lead.getProjects()) {
             if (pr != null)
-                for (Department dp : FirmDAO.getFirm().getDepartments()) {
-                    if (dp != null)
-                        for (Employee em : dp.getEmployees()) {
-                            if (em != null && !lead.equals(em) && em.getPosition() != Position.TEAM_LEAD && em.getProjects().contains(pr)) {
-                                employees.add(em);
-                            }
-                        }
+                for (Employee em : getEmployeeForAllDepartment()) {
+                    if (!lead.equals(em) && em.getPosition() != Position.TEAM_LEAD && em.getProjects().contains(pr)) {
+                        employees.add(em);
+                    }
                 }
+
         }
 
         return employees;
@@ -118,10 +106,10 @@ public class EmployeeDAO {
 
     public static Set<Employee> employeesWithoutProject() {
         Set<Employee> employees = new HashSet<>();
-
-        for (Department dp : FirmDAO.getFirm().getDepartments()) {
-            if (dp != null)
-                addEmployees(employees, dp);
+        for (Employee em : getEmployeeForAllDepartment()) {
+            if (em.getProjects().isEmpty()) {
+                employees.add(em);
+            }
         }
         return employees;
     }
@@ -148,5 +136,17 @@ public class EmployeeDAO {
 
         emByProject(employees, projectName);
         return employees;
+    }
+
+    public static ArrayList<Employee> getEmployeeForAllDepartment() {
+        ArrayList<Employee> empl = new ArrayList<>();
+        for (Department dp : FirmDAO.getFirm().getDepartments()) {
+            if (dp != null)
+                for (Employee em : dp.getEmployees()) {
+                    if (em != null)
+                        empl.add(em);
+                }
+        }
+        return empl;
     }
 }
