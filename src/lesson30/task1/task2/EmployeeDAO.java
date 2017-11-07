@@ -45,19 +45,21 @@ public class EmployeeDAO {
 
         for (Project pr : ProjectDAO.projectsByCustomer(customer)) {
             if (pr != null)
-                emByProject(employees, pr);
+                emByProject(employees, pr.getName());
         }
 
         return employees;
     }
 
-    private static void emByProject(Set<Employee> employees, Project pr) {
+    private static void emByProject(Set<Employee> employees, String prName) {
         for (Department dp : FirmDAO.getFirm().getDepartments()) {
             if (dp != null)
                 for (Employee em : dp.getEmployees()) {
-                    if (em != null && em.getProjects().contains(pr)) {
-                        employees.add(em);
-                    }
+                    if (em != null)
+                        for (Project pr : em.getProjects()) {
+                            if (pr.getName().equals(prName))
+                                employees.add(em);
+                        }
                 }
         }
     }
@@ -119,30 +121,32 @@ public class EmployeeDAO {
 
         for (Department dp : FirmDAO.getFirm().getDepartments()) {
             if (dp != null)
-                for (Employee em : dp.getEmployees()) {
-                    if (em != null && em.getProjects().isEmpty()) {
-                        employees.add(em);
-                    }
-                }
+                addEmployees(employees, dp);
         }
         return employees;
     }
 
-    public static Set<Employee> employeesByDepartmentWithoutProject(Department department) {
+    public static Set<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
         Set<Employee> employees = new HashSet<>();
-        for (Employee em : department.getEmployees()) {
+        for (Department dp : FirmDAO.getFirm().getDepartments())
+            if (dp != null && dp.getType().equals(departmentType))
+                addEmployees(employees, dp);
+        return employees;
+    }
+
+    private static void addEmployees(Set<Employee> employees, Department dp) {
+        for (Employee em : dp.getEmployees()) {
             if (em != null && em.getProjects().isEmpty()) {
                 employees.add(em);
             }
         }
-        return employees;
     }
 
-    public static Set<Employee> employeesByProject(Project project) {
+    public static Set<Employee> employeesByProject(String projectName) {
 
         Set<Employee> employees = new HashSet<>();
 
-        emByProject(employees, project);
+        emByProject(employees, projectName);
         return employees;
     }
 }
