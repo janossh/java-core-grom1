@@ -18,7 +18,7 @@ public class Controller {
 
 
 
-    public Set<Employee> employeesByProject(Project projectName) {
+    public Set<Employee> employeesByProject(String projectName) {
         return EmployeeDAO.employeesByProject(projectName);
     }
 
@@ -26,7 +26,7 @@ public class Controller {
         return ProjectDAO.projectsByEMployee(employee);
     }
 
-    public Set<Employee> employeesByDepartmentWithoutProject(Department departmentType) {
+    public Set<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
         return EmployeeDAO.employeesByDepartmentWithoutProject(departmentType);
     }
 
