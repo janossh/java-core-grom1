@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Solution {
     public static Map<Character, Long> countSymbols(String text) {
 
-        HashMap<Character, Long> result = new HashMap<>();
+        TreeMap<Character, Long> result = new TreeMap<>();
 
         if (text == null) return result;
 
@@ -38,7 +38,7 @@ public class Solution {
 
     public static Map<String, Long> words(String text) {
 
-        HashMap<String, Long> result = new HashMap<>();
+        TreeMap<String, Long> result = new TreeMap<>();
 
         if (text == null) return result;
 
