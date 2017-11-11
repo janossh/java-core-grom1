@@ -28,7 +28,7 @@ public class Solution {
     private static boolean countNumbers(String str) {
         boolean flag = true;
 
-        String[] arrayList = str.split(" ");
+        String[] arrayList =  str.split(" ");
 
         if (!isDigits(str) && arrayList.length != 10)
             return false;
