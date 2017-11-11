@@ -18,13 +18,7 @@ public class Demo {
 
         Controller controller = new Controller();
 
-        controller.addBooks(book1);
-        controller.addBooks(book2);
-        controller.addBooks(book3);
-        controller.addBooks(book4);
-        controller.addBooks(book5);
-
-        System.out.println(controller.getBooks());
+        controller.login("admin", "admin123");
 
         controller.addLibraian(user0);
         controller.addLibraian(user1);
@@ -38,6 +32,17 @@ public class Demo {
         controller.deleteLibraian(105L);
 
         System.out.println(controller.getLibraians());
+
+        controller.logout();
+        controller.login("Name1", "123456");
+
+        controller.addBooks(book1);
+        controller.addBooks(book2);
+        controller.addBooks(book3);
+        controller.addBooks(book4);
+        controller.addBooks(book5);
+
+        System.out.println(controller.getBooks());
 
         controller.addVisitor(user2);
         controller.addVisitor(user3);

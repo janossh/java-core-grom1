@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class UserDAO {
     private ArrayList<User> users = new ArrayList<>();
-
+    private User curentUser;
 
     private User addUser(User user, TypeOfUser typeOfUser) {
         user.setTypeOfUser(typeOfUser);
@@ -13,16 +13,35 @@ public class UserDAO {
         return user;
     }
 
+    public User getCurentUser() {
+        return curentUser;
+    }
+
     public User addLibraian(User user) {
-        return addUser(user, TypeOfUser.LIBRAIAN);
+        if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+            return addUser(user, TypeOfUser.LIBRAIAN);
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+            return null;
+        }
     }
 
     public User addVisitor(User user) {
-        return addUser(user, TypeOfUser.VISITOR);
+        if (curentUser != null && (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
+            return addUser(user, TypeOfUser.VISITOR);
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+            return null;
+        }
     }
 
     public ArrayList<User> getUsers() {
-        return users;
+        if (curentUser == null || (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
+            return users;
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+            return null;
+        }
     }
 
     private boolean checkDates(User user) {
@@ -38,21 +57,23 @@ public class UserDAO {
     }
 
     public void issueBook(long userId, String callNo) {
-        User user =findUserById(userId);
+        if (curentUser != null) {
+            User user = findUserById(userId);
 
-        user.getIssuedBooks().add(callNo);
-        user.getIssuedDates().add(new Date());
+            user.getIssuedBooks().add(callNo);
+            user.getIssuedDates().add(new Date());
+        }
     }
 
     public void returnBook(Long userId, String callNo) {
+        if (curentUser != null) {
+            User user = findUserById(userId);
 
-        User user =findUserById(userId);
+            int indexOfBook = findIndexOfArrayIssuedBooks(userId, callNo);
 
-        int indexOfBook = findIndexOfArrayIssuedBooks(userId, callNo);
-
-        user.getIssuedBooks().remove(indexOfBook);
-        user.getIssuedDates().remove(indexOfBook);
-
+            user.getIssuedBooks().remove(indexOfBook);
+            user.getIssuedDates().remove(indexOfBook);
+        }
     }
 
 
@@ -81,45 +102,63 @@ public class UserDAO {
     }
 
     public int findIndexOfArrayIssuedBooks(Long userId, String callNo) {
-        User user = findUserById(userId);
         int index = -1;
-        if (user != null) {
-            ArrayList<String> callNos = user.getIssuedBooks();
-            for (int i = 0; i < callNos.size(); i++) {
-                if (callNos.get(i).equals(callNo)) {
-                    return i;
+        if (curentUser != null) {
+            User user = findUserById(userId);
+
+            if (user != null) {
+                ArrayList<String> callNos = user.getIssuedBooks();
+                for (int i = 0; i < callNos.size(); i++) {
+                    if (callNos.get(i).equals(callNo)) {
+                        return i;
+                    }
                 }
+            } else {
+                System.out.println("Ошибка! Студента с номером ид " + callNo + " нет в системе ");
+                return index;
             }
+            System.out.println("Ошибка! Студент " + user.getName() + " не брал книгу " + callNo);
+            return index;
         } else {
-            System.out.println("Ошибка! Студента с номером ид " + callNo + " нет в системе ");
+            System.out.println("Ошибка доступа! ");
             return index;
         }
-        System.out.println("Ошибка! Студент " + user.getName() + " не брал книгу " + callNo);
-        return index;
     }
 
     public ArrayList<User> listOfUsersLibraian() {
         ArrayList<User> listOfLibraian = new ArrayList<>();
-        for (User user : users) {
-            if (user.getTypeOfUser() == TypeOfUser.LIBRAIAN)
-                listOfLibraian.add(user);
+        if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+            for (User user : users) {
+                if (user.getTypeOfUser() == TypeOfUser.LIBRAIAN)
+                    listOfLibraian.add(user);
+            }
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
         }
         return listOfLibraian;
     }
 
     public ArrayList<User> listOfUsersVisitors() {
         ArrayList<User> listOfLibraian = new ArrayList<>();
-        for (User user : users) {
-            if (user.getTypeOfUser() == TypeOfUser.VISITOR)
-                listOfLibraian.add(user);
+        if (curentUser != null && (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
+            for (User user : users) {
+                if (user.getTypeOfUser() == TypeOfUser.VISITOR)
+                    listOfLibraian.add(user);
+            }
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
         }
         return listOfLibraian;
     }
 
     public void deleteLibraian(Long id) {
-        User user = findUserById(id);
-        if (user != null && user.getTypeOfUser() == TypeOfUser.LIBRAIAN)
-            users.remove(user);
+        if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+            User user = findUserById(id);
+            if (user != null && user.getTypeOfUser() == TypeOfUser.LIBRAIAN)
+                users.remove(user);
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+        }
     }
 
     private User findUserById(Long id) {
@@ -130,5 +169,18 @@ public class UserDAO {
         return null;
     }
 
+    public boolean login(String name, String password) {
+        for (User user : users) {
+            if (curentUser == null && user != null && user.getName().equals(name) && user.getPassword().equals(password)) {
+                curentUser = user;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void logout() {
+        curentUser = null;
+    }
 
 }

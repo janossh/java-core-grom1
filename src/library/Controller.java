@@ -3,8 +3,17 @@ package library;
 import java.util.ArrayList;
 
 public class Controller {
-    public static BookDAO bookDAO = new BookDAO();
-    public static UserDAO userDAO = new UserDAO();
+    public static BookDAO bookDAO;
+    public static UserDAO userDAO;
+
+    public Controller() {
+        bookDAO = new BookDAO();
+        userDAO = new UserDAO();
+        User userAdm = new User(999, "admin", "admin123", "1@1.com", "Qwerty str.", "Kiev", "01234568780");
+        userAdm.setTypeOfUser(TypeOfUser.ADMIN);
+        userDAO.getUsers().add(userAdm);
+    }
+
 
     public static User addLibraian(User user) {
         return userDAO.addLibraian(user);
@@ -31,7 +40,13 @@ public class Controller {
     }
 
     public static boolean addBooks(Book book) {
-        return bookDAO.addBook(book);
+        if (userDAO.getCurentUser().getTypeOfUser() == TypeOfUser.LIBRAIAN) {
+            return bookDAO.addBook(book);
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+            return false;
+        }
+
     }
 
     public static ArrayList<Book> getIssuedBooks() {
@@ -58,4 +73,11 @@ public class Controller {
         return flag;
     }
 
+    public static boolean login(String name, String password) {
+        return userDAO.login(name, password);
+    }
+
+    public static void logout() {
+        userDAO.logout();
+    }
 }
