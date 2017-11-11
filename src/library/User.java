@@ -68,4 +68,16 @@ public class User {
     public ArrayList<Date> getIssuedDates() {
         return issuedDates;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                ", typeOfUser=" + typeOfUser +
+                ", issuedBooks=" + issuedBooks +
+                ", issuedDates=" + issuedDates +
+                '}';
+    }
 }
