@@ -50,6 +50,8 @@ public class Demo {
 
         System.out.println(controller.getVisitors());
 
+        controller.logout();
+
         controller.issueBook(102L, "1@1");
 
         System.out.println(controller.getVisitors());

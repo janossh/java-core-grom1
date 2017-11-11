@@ -97,8 +97,11 @@ public class UserDAO {
     }
 
     public boolean performCheckToIssueBook(long userId, String callNo) {
-        User user = findUserById(userId);
-        return user != null ? checkArrays(user) && checkNonDoubleBook(user, callNo) && checkDates(user) : false;
+        if (getCurentUser() != null) {
+            User user = findUserById(userId);
+            return user != null ? checkArrays(user) && checkNonDoubleBook(user, callNo) && checkDates(user) : false;
+        }
+        return false;
     }
 
     public int findIndexOfArrayIssuedBooks(Long userId, String callNo) {

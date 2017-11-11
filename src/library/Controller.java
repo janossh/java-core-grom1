@@ -40,7 +40,7 @@ public class Controller {
     }
 
     public static boolean addBooks(Book book) {
-        if (userDAO.getCurentUser().getTypeOfUser() == TypeOfUser.LIBRAIAN) {
+        if (userDAO.getCurentUser() != null && userDAO.getCurentUser().getTypeOfUser() == TypeOfUser.LIBRAIAN) {
             return bookDAO.addBook(book);
         } else {
             System.out.println("У вас не достаточно прав доступа");
@@ -50,7 +50,12 @@ public class Controller {
     }
 
     public static ArrayList<Book> getIssuedBooks() {
-        return bookDAO.getIssuedBooks();
+        if (userDAO.getCurentUser() != null && userDAO.getCurentUser().getTypeOfUser() == TypeOfUser.LIBRAIAN) {
+            return bookDAO.getIssuedBooks();
+        } else {
+            System.out.println("У вас не достаточно прав доступа");
+            return new ArrayList<Book>();
+        }
     }
 
     public static boolean issueBook(Long userId, String callNo) {
