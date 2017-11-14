@@ -8,7 +8,7 @@ public class BookDAO {
 
     public boolean addBook(Book book) {
         boolean flBook = false;
-        if (book != null && findBookByCallNo(book.getCallNo(), true) == null) {
+        if (book != null) {
             books.add(book);
             return true;
 
@@ -17,26 +17,34 @@ public class BookDAO {
         return flBook;
     }
 
-    public Book findBookByCallNo(String callNo, boolean thisAdd) {
-        Book book = null;
+    public Book findFreeBookByCallNo(String callNo) {
         for (Book b : books) {
-            if (b.getCallNo().equals(callNo))
+            if (b.getCallNo().equals(callNo) && !b.getIssued())
                 return b;
         }
-        if (!thisAdd)
-            System.err.println("Данная книга " + callNo + " не найдена в каталоге");
-        return book;
+
+        System.out.println("Нет свободных книг " + callNo);
+        return null;
+    }
+
+    public Book findIssuedBookByCallNo(String callNo) {
+        for (Book b : books) {
+            if (b.getCallNo().equals(callNo) && b.getIssued())
+                return b;
+        }
+
+        System.out.println("Данная книга " + callNo + " не выдавалась");
+        return null;
     }
 
     public void issueBook(String callNo) {
-        Book book = findBookByCallNo(callNo, false);
-        book.setQuntity(book.getQuntity() - 1);
-        book.setIssued(book.getIssued() + 1);
+        Book book = findFreeBookByCallNo(callNo);
+        book.setIssued(true);
     }
 
     public boolean checkIssue(String callNo) {
-        Book book = findBookByCallNo(callNo, false);
-        if (book != null && book.getQuntity() >= 1) {
+        Book book = findFreeBookByCallNo(callNo);
+        if (book != null && !book.getIssued()) {
             return true;
         }
         System.out.println("Недостаточное количество для выдачи книг " + callNo);
@@ -44,8 +52,8 @@ public class BookDAO {
     }
 
     public boolean checkReturn(String callNo) {
-        Book book = findBookByCallNo(callNo, false);
-        if (book != null && book.getIssued() >= 1) {
+        Book book = findIssuedBookByCallNo(callNo);
+        if (book != null && book.getIssued()) {
             return true;
         }
         System.out.println("Недостаточное количество для возврата книг " + callNo);
@@ -53,9 +61,8 @@ public class BookDAO {
     }
 
     public void returnBook(String callNo) {
-        Book book = findBookByCallNo(callNo, false);
-        book.setQuntity(book.getQuntity() + 1);
-        book.setIssued(book.getIssued() - 1);
+        Book book = findIssuedBookByCallNo(callNo);
+        book.setIssued(false);
     }
 
     public ArrayList<Book> getBooks() {
@@ -65,7 +72,7 @@ public class BookDAO {
     public ArrayList<Book> getIssuedBooks() {
         ArrayList<Book> bookIssuedList = new ArrayList<>();
         for (Book book : books)
-            if (book.getIssued() > 0)
+            if (book.getIssued())
                 bookIssuedList.add(book);
         return bookIssuedList;
     }

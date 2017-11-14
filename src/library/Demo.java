@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Demo {
     public static void main(String[] args) {
-        Book book1 = new Book(121, "1@1", "Name1", "Pushkin", "Kiev", 1, new Date());
-        Book book2 = new Book(122, "1@2", "Name2", "Pushkin", "Kiev", 5, new Date());
-        Book book3 = new Book(12, "1@3", "Name3", "Pushkin", "Kiev", 5, new Date());
-        Book book4 = new Book(124, "1@4", "Name4", "Pushkin", "Kiev", 5, new Date());
-        Book book5 = new Book(125, "1@5", "Name5", "Pushkin", "Kiev", 5, new Date());
+        Book book1 = new Book(121, "1@1", "Name1", "Pushkin", "Kiev",  new Date());
+        Book book2 = new Book(122, "1@2", "Name2", "Pushkin", "Kiev",  new Date());
+        Book book3 = new Book(12, "1@3", "Name3", "Pushkin", "Kiev",  new Date());
+        Book book4 = new Book(124, "1@4", "Name4", "Pushkin", "Kiev",  new Date());
+        Book book5 = new Book(125, "1@5", "Name5", "Pushkin", "Kiev",  new Date());
 
         User user0 = new User(100, "Name0", "123456", "1@1.com", "Qwerty str.", "Kiev", "01234568780");
         User user1 = new User(101, "Name1", "123456", "1@1.com", "Qwerty str.", "Kiev", "01234568781");
@@ -50,7 +50,7 @@ public class Demo {
 
         System.out.println(controller.getVisitors());
 
-        controller.logout();
+        //controller.logout();
 
         controller.issueBook(102L, "1@1");
 
@@ -62,7 +62,7 @@ public class Demo {
         System.out.println(controller.getVisitors());
         System.out.println(controller.getIssuedBooks());
 
-        controller.returnBook(103L, "1@1");
+       controller.returnBook(103L, "1@1");
         System.out.println(controller.getIssuedBooks());
 
         controller.returnBook(102L, "1@1");

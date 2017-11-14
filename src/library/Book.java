@@ -8,25 +8,26 @@ public class Book {
     private String name;
     private String author;
     private String publisher;
-    private int quntity;
-    private int issued;
+    //private int quntity;
+    //private int issued;
+    private boolean issued;
     private Date addedDate;
 
-    public Book(long id, String callNo, String name, String author, String publisher, int quntity, Date addedDate) {
+    public Book(long id, String callNo, String name, String author, String publisher, Date addedDate) {
         this.id = id;
         this.callNo = callNo;
         this.name = name;
         this.author = author;
         this.publisher = publisher;
-        this.quntity = quntity;
+        //this.quntity = quntity;
         this.addedDate = addedDate;
     }
 
-    public void setQuntity(int quntity) {
-        this.quntity = quntity;
-    }
+    //public void setQuntity(int quntity) {
+//        this.quntity = quntity;
+//    }
 
-    public void setIssued(int issued) {
+    public void setIssued(boolean issued) {
         this.issued = issued;
     }
 
@@ -50,11 +51,11 @@ public class Book {
         return publisher;
     }
 
-    public int getQuntity() {
-        return quntity;
-    }
+//    public int getQuntity() {
+//        return quntity;
+//    }
 
-    public int getIssued() {
+    public boolean getIssued() {
         return issued;
     }
 
@@ -70,7 +71,7 @@ public class Book {
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", publisher='" + publisher + '\'' +
-                ", quntity=" + quntity +
+                //", quntity=" + quntity +
                 ", issued=" + issued +
                 ", addedDate=" + addedDate +
                 '}';
