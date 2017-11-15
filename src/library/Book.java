@@ -8,8 +8,8 @@ public class Book {
     private String name;
     private String author;
     private String publisher;
-    //private int quntity;
-    //private int issued;
+    private Date dateIssued;
+    private Long userIdIssued;
     private boolean issued;
     private Date addedDate;
 
@@ -23,9 +23,21 @@ public class Book {
         this.addedDate = addedDate;
     }
 
-    //public void setQuntity(int quntity) {
-//        this.quntity = quntity;
-//    }
+    public Date getDateIssued() {
+        return dateIssued;
+    }
+
+    public void setDateIssued(Date dateIssued) {
+        this.dateIssued = dateIssued;
+    }
+
+    public Long getUserIdIssued() {
+        return userIdIssued;
+    }
+
+    public void setUserIdIssued(Long userIdIssued) {
+        this.userIdIssued = userIdIssued;
+    }
 
     public void setIssued(boolean issued) {
         this.issued = issued;
@@ -50,10 +62,6 @@ public class Book {
     public String getPublisher() {
         return publisher;
     }
-
-//    public int getQuntity() {
-//        return quntity;
-//    }
 
     public boolean getIssued() {
         return issued;

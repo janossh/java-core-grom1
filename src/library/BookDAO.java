@@ -37,31 +37,54 @@ public class BookDAO {
         return null;
     }
 
-    public void issueBook(String callNo) {
+    public void issueBook(long userId, String callNo) {
         Book book = findFreeBookByCallNo(callNo);
+
+        book.setUserIdIssued(userId);
+        book.setDateIssued(new Date());
         book.setIssued(true);
     }
 
-    public boolean checkIssue(String callNo) {
+    public boolean checkIssue(long userId, String callNo) {
         Book book = findFreeBookByCallNo(callNo);
-        if (book != null && !book.getIssued()) {
+        User user = UserDAO.findUserById(userId);
+        if (UserDAO.getCurentUser() != null && checkNonDoubleBook(user, callNo) && checkDates(user) && user != null && book != null && !book.getIssued()) {
             return true;
         }
         System.out.println("Недостаточное количество для выдачи книг " + callNo);
         return false;
     }
 
-    public boolean checkReturn(String callNo) {
+    public boolean checkReturn(long userId, String callNo) {
         Book book = findIssuedBookByCallNo(callNo);
-        if (book != null && book.getIssued()) {
+        User user = UserDAO.findUserById(userId);
+
+        boolean flHaveThisBook = false;
+
+        if (user != null) {
+            ArrayList<Book> issuedBooks = getIssuedBooksByUserId(userId);
+
+            for (int i = 0; i < issuedBooks.size(); i++) {
+                if (issuedBooks.get(i).getCallNo().equals(callNo)) {
+                    flHaveThisBook = true;
+                }
+            }
+        } else {
+            System.out.println("Ошибка! Студента с номером ид " + callNo + " нет в системе ");
+            return false;
+        }
+
+        if (book != null && book.getIssued() && flHaveThisBook) {
             return true;
         }
         System.out.println("Недостаточное количество для возврата книг " + callNo);
         return false;
     }
 
-    public void returnBook(String callNo) {
+    public void returnBook(Long userId, String callNo) {
         Book book = findIssuedBookByCallNo(callNo);
+        book.setDateIssued(null);
+        book.setUserIdIssued(null);
         book.setIssued(false);
     }
 
@@ -76,5 +99,39 @@ public class BookDAO {
                 bookIssuedList.add(book);
         return bookIssuedList;
     }
+
+    public ArrayList<Book> getIssuedBooksByUserId(Long userId) {
+        ArrayList<Book> bookIssuedList = new ArrayList<>();
+        for (Book book : books)
+            if (book.getIssued() && book.getUserIdIssued() == userId && book.getDateIssued() != null)
+                bookIssuedList.add(book);
+        return bookIssuedList;
+    }
+
+    private boolean checkDates(User user) {
+        boolean flBook = true;
+        Date dateOfIssue = new Date();
+        for (Book book : getIssuedBooksByUserId(user.getId())) {
+            if (book.getDateIssued() != null && (dateOfIssue.getTime() - book.getDateIssued().getTime() > 31 * 86400 * 1000)) {
+                flBook = false;
+                return flBook;
+            }
+        }
+        return flBook;
+    }
+
+
+    public boolean checkNonDoubleBook(User user, String callNo) {
+        boolean flBook = true;
+        for (Book book : getIssuedBooksByUserId(user.getId())) {
+            if (book.getCallNo().equals(callNo)) {
+                flBook = false;
+                System.out.println("Ошибка! У студент " + user.getName() + " уже есть данная книга " + callNo);
+                return flBook;
+            }
+        }
+        return flBook;
+    }
+
 
 }

@@ -60,9 +60,8 @@ public class Controller {
 
     public static boolean issueBook(Long userId, String callNo) {
         boolean flag = false;
-        if (userDAO.performCheckToIssueBook(userId, callNo) && bookDAO.checkIssue(callNo)) {
-            userDAO.issueBook(userId, callNo);
-            bookDAO.issueBook(callNo);
+        if (userDAO.getCurentUser() != null && bookDAO.checkIssue(userId, callNo) && bookDAO.checkIssue(userId, callNo)) {
+            bookDAO.issueBook(userId, callNo);
             flag = true;
         }
         return flag;
@@ -70,9 +69,8 @@ public class Controller {
 
     public static boolean returnBook(Long userId, String callNo) {
         boolean flag = false;
-        if (userDAO.findIndexOfArrayIssuedBooks(userId, callNo) > (-1) && bookDAO.checkReturn(callNo)) {
-            userDAO.returnBook(userId, callNo);
-            bookDAO.returnBook(callNo);
+        if (userDAO.getCurentUser() != null &&bookDAO.checkReturn(userId, callNo)) {
+            bookDAO.returnBook(userId, callNo);
             flag = true;
         }
         return flag;

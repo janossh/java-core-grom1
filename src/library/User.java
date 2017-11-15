@@ -12,8 +12,8 @@ public class User {
     private String city;
     private String contact;
     private TypeOfUser typeOfUser;
-    private ArrayList<String> issuedBooks = new ArrayList<>();
-    private ArrayList<Date> issuedDates = new ArrayList<>();
+   // private ArrayList<String> issuedBooks = new ArrayList<>();
+    //private ArrayList<Date> issuedDates = new ArrayList<>();
 
     public User(long id, String name, String password, String email, String address, String city, String contact) {
         this.id = id;
@@ -61,13 +61,6 @@ public class User {
         return typeOfUser;
     }
 
-    public ArrayList<String> getIssuedBooks() {
-        return issuedBooks;
-    }
-
-    public ArrayList<Date> getIssuedDates() {
-        return issuedDates;
-    }
 
     @Override
     public String toString() {
@@ -76,8 +69,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", contact='" + contact + '\'' +
                 ", typeOfUser=" + typeOfUser +
-                ", issuedBooks=" + issuedBooks +
-                ", issuedDates=" + issuedDates +
                 '}';
     }
 }
