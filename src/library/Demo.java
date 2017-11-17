@@ -3,7 +3,7 @@ package library;
 import java.util.Date;
 
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         Book book1 = new Book(121, "1@1", "Name1", "Pushkin", "Kiev",  new Date());
         Book book2 = new Book(122, "1@2", "Name2", "Pushkin", "Kiev",  new Date());
         Book book3 = new Book(12, "1@3", "Name3", "Pushkin", "Kiev",  new Date());

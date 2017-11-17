@@ -17,34 +17,34 @@ public class UserDAO {
         return curentUser;
     }
 
-    public User addLibraian(User user) {
+    public User addLibraian(User user) throws Exception{
         if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
             return addUser(user, TypeOfUser.LIBRAIAN);
         } else {
-            System.out.println("У вас не достаточно прав доступа");
-            return null;
+            throw new Exception("У вас не достаточно прав доступа");
+            //return null;
         }
     }
 
-    public User addVisitor(User user) {
+    public User addVisitor(User user) throws Exception{
         if (curentUser != null && (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
             return addUser(user, TypeOfUser.VISITOR);
         } else {
-            System.out.println("У вас не достаточно прав доступа");
-            return null;
+            throw new Exception("У вас не достаточно прав доступа");
+            //return null;
         }
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() throws Exception{
         if (curentUser == null || (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
             return users;
         } else {
-            System.out.println("У вас не достаточно прав доступа");
-            return null;
+            throw new Exception("У вас не достаточно прав доступа");
+            //return null;
         }
     }
 
-    public ArrayList<User> listOfUsersLibraian() {
+    public ArrayList<User> listOfUsersLibraian() throws Exception{
         ArrayList<User> listOfLibraian = new ArrayList<>();
         if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
             for (User user : users) {
@@ -52,12 +52,12 @@ public class UserDAO {
                     listOfLibraian.add(user);
             }
         } else {
-            System.out.println("У вас не достаточно прав доступа");
+            throw new Exception("У вас не достаточно прав доступа");
         }
         return listOfLibraian;
     }
 
-    public ArrayList<User> listOfUsersVisitors() {
+    public ArrayList<User> listOfUsersVisitors() throws Exception{
         ArrayList<User> listOfLibraian = new ArrayList<>();
         if (curentUser != null && (curentUser.getTypeOfUser() == TypeOfUser.ADMIN || curentUser.getTypeOfUser() == TypeOfUser.LIBRAIAN)) {
             for (User user : users) {
@@ -65,18 +65,18 @@ public class UserDAO {
                     listOfLibraian.add(user);
             }
         } else {
-            System.out.println("У вас не достаточно прав доступа");
+            throw new Exception("У вас не достаточно прав доступа");
         }
         return listOfLibraian;
     }
 
-    public void deleteLibraian(Long id) {
+    public void deleteLibraian(Long id) throws Exception{
         if (curentUser != null && curentUser.getTypeOfUser() == TypeOfUser.ADMIN) {
             User user = findUserById(id);
             if (user != null && user.getTypeOfUser() == TypeOfUser.LIBRAIAN)
                 users.remove(user);
         } else {
-            System.out.println("У вас не достаточно прав доступа");
+            throw new Exception("У вас не достаточно прав доступа");
         }
     }
 
