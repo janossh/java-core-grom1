@@ -34,9 +34,10 @@ public class ReadWriteFile {
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
         try {
-            writer = new FileWriter(path);
+            writer = new FileWriter(path,true);
             bufferedWriter = new BufferedWriter(writer);
-            bufferedWriter.append("PPPPPPPP");
+            bufferedWriter.append("\n");
+            bufferedWriter.append(content);
         } catch (IOException e) {
             System.err.println("Can't write to file");
         }finally {
