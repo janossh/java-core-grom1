@@ -35,7 +35,7 @@ public class Solution {
         String str = "";
 
         try {
-            while (!flEnd.equals((str = bufferedReader.readLine()))) {
+            while (!flEnd.equals(str = bufferedReader.readLine())) {
                 newLine = new StringBuilder(str);
                 stringBuilder.append(newLine + System.lineSeparator());
             }
