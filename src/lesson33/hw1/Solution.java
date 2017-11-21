@@ -33,16 +33,15 @@ public class Solution {
         String flEnd = "wr";
         StringBuilder newLine;
         String str = "";
-        do {
-            try {
-                str = bufferedReader.readLine();
-                newLine = new StringBuilder(str.subSequence(0, str.length()));
-                if (!flEnd.equals(str))
-                    stringBuilder.append(newLine + System.lineSeparator());
-            } catch (IOException e) {
-                System.out.println("Error read from keyboard");
+
+        try {
+            while (!flEnd.equals((str = bufferedReader.readLine()))) {
+                newLine = new StringBuilder(str);
+                stringBuilder.append(newLine + System.lineSeparator());
             }
-        } while (!flEnd.equals(str));
+        } catch (IOException e) {
+            System.out.println("Error read from keyboard");
+        }
 
         try {
             inputStreamReader.close();
