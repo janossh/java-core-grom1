@@ -2,10 +2,8 @@ package lesson34;
 
 import java.io.*;
 
-public class Practice {
-    public static void main(String[] args) throws Exception {
-        copyFileContent("c:\\1.txt", "c:\\2.txt");
-    }
+public class Solution {
+
 
     public static void copyFileContent(String fileFromPath, String fileToPath) throws Exception {
         validate(fileFromPath, fileToPath);
